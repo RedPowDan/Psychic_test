@@ -36,7 +36,7 @@
                 <td>{{psychic.name}}</td>
                 <td>{{psychic.score}}</td>
                 <td>
-                    {%if psychic.last_prediction%}
+                    {%if psychic.last_prediction is not None%}
                         {{psychic.last_prediction}}
                     {%else%}
                         Предсказаний еще не было
@@ -48,7 +48,7 @@
         </table>
     </div>
     <div>
-        {%if desired_value%}
+        {%if desired_value is not None%}
         <p> Ваше загаданное число: <b>{{desired_value}}</b></p>
             {%for psychic in request.session.psychics%}
                 {%if psychic.is_won%}
