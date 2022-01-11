@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Тестирование экстрасенсов{% endblock %}
+
+{% block content %}
+
+<div>
+    <p>Предсказания</p>
+    <table class="table">
+            <tr>
+                <td>Имя</td>
+                <td>Счет</td>
+                <td>Последнее предсказание</td>
+                <td>История предсказаний</td>
+            </tr>
+            {%for psychic in request.session.psychics%}
+            <tr>
+                <td>{{psychic.name}}</td>
+                <td>{{psychic.score}}</td>
+                <td>
+                    {%if psychic.last_prediction is not None%}
+                        {{psychic.last_prediction}}
+                    {%else%}
+                        Предсказаний еще не было
+                    {%endif%}
+                </td>
+
+                <td>{{psychic.history}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+</div>
+<div>
+    <p>Введите число которое вы загадали</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="number" min="0" max="100" required name="desired_value">
+        <input value="Ввести" type="submit">
+    </form>
+</div>
+
+{% endblock %}

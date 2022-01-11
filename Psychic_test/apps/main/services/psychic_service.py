@@ -14,7 +14,7 @@ class PsychicService:
     FINE_VALUE = 10
     ENCOURAGEMENT_VALUE = 15
 
-    RANGE_FOR_WIN = 10
+    RANGE_FOR_WIN = 0
 
     def summarizing(self, desired_value: int, psychics: list):
         best_psychic = self._get_best_psychic(desired_value, psychics)
@@ -34,7 +34,7 @@ class PsychicService:
             psychic.is_won = False
             if psychic.last_prediction is not None:
                 buf = self._get_difference_between_numbers(desired_value, psychic.last_prediction)
-                if buf <= 10 and buf < min_range_from_value:
+                if buf <= self.RANGE_FOR_WIN and buf < min_range_from_value:
                     min_range_from_value = buf
                     index_best_psychics = index
 
@@ -84,3 +84,12 @@ class PsychicService:
         for value in dict_values:
             psychics.append(Psychic.get_from_dict_to_class(value))
         return psychics
+
+    def validate_desired_value(self, desired_value):
+        try:
+            desired_value = int(desired_value)
+            if self.DEFAULT_MIN_RANGE_NUMBER <= desired_value <= self.DEFAULT_MAX_RANGE_NUMBER:
+                return True
+            return False
+        except:
+            return False

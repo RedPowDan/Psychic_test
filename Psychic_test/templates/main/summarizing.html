@@ -4,28 +4,13 @@
 
 {% block content %}
 
-{%if not request.session.is_gamed%}
 <div>
-    <p> Загадать двухзначное число</p>
-    <form method="POST">
-        {% csrf_token %}
-
-        <input value="Загадать" type="submit">
-    </form>
-</div>
-{%else%}
-<div>
-    <p> Ввести число</p>
-    <p> Правила игры </p>
-    <p> Если один из экстрасенсов отгадает или приблизительно скажет число в радиусе 10 то он победил <br>
-    победитель только один! Тот кто ближе всего будет к числу, будет победителем!</p>
     <div>
         <table class="table">
             <tr>
                 <td>Имя</td>
                 <td>Счет</td>
                 <td>Последнее предсказание</td>
-                <td>История предсказаний</td>
             </tr>
             {%for psychic in request.session.psychics%}
             <tr
@@ -41,8 +26,7 @@
                     {%else%}
                         Предсказаний еще не было
                     {%endif%}
-                    </td>
-                    <td>{{psychic.history}}</td>
+                </td>
             </tr>
             {%endfor%}
         </table>
@@ -58,16 +42,12 @@
         <p>Ваша история чисел которые вы загадали: <br>
             {{request.session.history_player}}
         </p>
-        {%else%}
-        <p> Загадайте число</p>
         {%endif%}
     </div>
     <form method="POST">
         {% csrf_token %}
-        <input type="number" required name="desired_value">
-        <input value="Ввести" type="submit">
+        <input value="Играть снова!" type="submit">
     </form>
 </div>
-{%endif%}
 
 {% endblock %}
