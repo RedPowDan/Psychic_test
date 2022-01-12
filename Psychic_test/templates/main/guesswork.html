@@ -34,7 +34,7 @@
     <p>Введите число которое вы загадали</p>
     <form method="POST">
         {% csrf_token %}
-        <input type="number" min="0" max="100" required name="desired_value">
+        <input type="number" min="10" max="99" required name="desired_value">
         <input value="Ввести" type="submit">
     </form>
 </div>

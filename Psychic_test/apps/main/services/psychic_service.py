@@ -8,7 +8,7 @@ class PsychicService:
         "Павел", "Василий", "Григорий", "Кирилл"
     ]
 
-    DEFAULT_MIN_RANGE_NUMBER = 0
+    DEFAULT_MIN_RANGE_NUMBER = 10
     DEFAULT_MAX_RANGE_NUMBER = 99
 
     FINE_VALUE = 10
@@ -17,16 +17,16 @@ class PsychicService:
     RANGE_FOR_WIN = 0
 
     def summarizing(self, desired_value: int, psychics: list):
-        best_psychic = self._get_best_psychic(desired_value, psychics)
-        if best_psychic is not None:
-            best_psychic.score += self.ENCOURAGEMENT_VALUE
+        self.mark_the_winners_psychic(desired_value, psychics)
         for psychic in psychics:
             if not psychic.is_won:
                 psychic.score -= self.FINE_VALUE
+            else:
+                psychic.score += self.ENCOURAGEMENT_VALUE
 
         return psychics
 
-    def _get_best_psychic(self, desired_value: int, psychics: list):
+    def mark_the_winners_psychic(self, desired_value: int, psychics: list):
         min_range_from_value = self.DEFAULT_MAX_RANGE_NUMBER
         index_best_psychics = None
 
@@ -34,15 +34,10 @@ class PsychicService:
             psychic.is_won = False
             if psychic.last_prediction is not None:
                 buf = self._get_difference_between_numbers(desired_value, psychic.last_prediction)
-                if buf <= self.RANGE_FOR_WIN and buf < min_range_from_value:
+                if buf <= self.RANGE_FOR_WIN and buf <= min_range_from_value:
                     min_range_from_value = buf
                     index_best_psychics = index
-
-        if index_best_psychics is None:
-            return None
-
-        psychics[index_best_psychics].is_won = True
-        return psychics[index_best_psychics]
+                    psychic.is_won = True
 
     def get_psychic_with_predictions(self, psychics: list):
         for psychic in psychics:

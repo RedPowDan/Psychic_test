@@ -9,7 +9,7 @@
         <table class="table">
             <tr>
                 <td>Имя</td>
-                <td>Счет</td>
+                <td>Достоверность</td>
                 <td>Последнее предсказание</td>
             </tr>
             {%for psychic in request.session.psychics%}
@@ -36,7 +36,7 @@
         <p> Ваше загаданное число: <b>{{desired_value}}</b></p>
             {%for psychic in request.session.psychics%}
                 {%if psychic.is_won%}
-                    <b>Победитель: {{psychic.name}}</b>
+                    <b>Победитель: {{psychic.name}}</b><br>
                 {%endif%}
             {%endfor%}
         <p>Ваша история чисел которые вы загадали: <br>
